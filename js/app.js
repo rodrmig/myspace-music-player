@@ -220,7 +220,7 @@ class MyspaceMusicPlayer {
 }
 
 let settings = {
-  containerID: 'test-container',
+  containerID: 'myspace-music-player',
   song: 'Feel_Good.mp3',
   artist: 'Syn_Cole',
   audioFilePath: 'audio/Syn_Cole-Feel_Good.mp3'
