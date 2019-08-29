@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.mmp-ui-container {
+  background-image: linear-gradient(#ffffff, #cdcdcd, #969696);
+  border-style: solid;
+  border-width: 1px;
+  display: grid;
+  font-family: Verdana, Helvetica, Arial;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 4fr;
+  min-height: 75px;
+  min-width: 300px;
+}
+
+.mmp-button-container {
+  margin: 8px 3px 8px 8px;
+}
+
+.mmp-button-container > button {
+  background-image: linear-gradient(#ffffff, #cdcdcd, #969696);
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #343a40;
+  height: 100%;
+  width: 100%;
+}
+
+.mmp-icon {
+  font-size: 48px;
+}
+
+.mmp-play-icon {
+  color: #00d820;
+}
+
+.mmp-pause-icon {
+  color: #343a40;
+}
+
+.mmp-display-container {
+  background-color: #343a40;
+  border-radius: 3px;
+  color: white;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 4fr 1fr;
+  font-size: 80%;
+  margin: 8px 8px 8px 3px;
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.mmp-eq-container {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mmp-eq-container > img {
+  max-height: 28px;
+  max-width: 87px;
+  height: auto;
+  width: 100%;
+}
+
+.mmp-song-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
