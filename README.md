@@ -1,4 +1,4 @@
-![Image of HTML5](https://github.com/rodrmig/xxxxx)
+![Image of HTML5](https://github.com/rodrmig/myspace-music-player/blob/master/img/demo.png?raw=true)
 
 # Myspace Music Player
 
@@ -9,7 +9,7 @@ This music player is a clone from the popular social network "Myspace" in the mi
 Clone this repository to your machine.
 
 ```bash
-git clone https://github.com/rodrmig/xxxxx
+git clone https://github.com/rodrmig/myspace-music-player
 ```
 
 ## Usage
