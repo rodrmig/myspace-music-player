@@ -2,7 +2,7 @@
 
 # Myspace Music Player
 
-This music player is a clone from the popular social network "Myspace" in the mid 2000's.
+This music player is a clone from the popular social network "Myspace" from the mid 2000's.
 
 ## Installation
 
@@ -13,7 +13,7 @@ git clone https://github.com/rodrmig/myspace-music-player
 ```
 
 ## Usage
-Open demo.html for a live demo. See the following code snippet from js/app.js for setup.
+Open `demo.html` for a live demo. See the following code snippet from `js/app.js` for setup.
 
 ```javascript
 let settings = {
