@@ -2,66 +2,73 @@ class UserInterface {
   constructor(settings) {
     this._settings = settings;
     this._extendSettings();
-    this._setRootContainer();
-    this._setUserInterfaceHTML();
+    this._setRoot();
+    this._setHTML();
     this.setPauseState();
   }
 
   _extendSettings() {
     this._settings.buttonIconClass = 'mmp-icon';
     this._settings.buttonIconSelector = '.' + this._settings.buttonIconClass;
+
     this._settings.buttonIconPlayInnerHTML = 'play_arrow';
     this._settings.buttonIconPlayClasses = this._settings.buttonIconClass + ' material-icons mmp-play-icon';
+    
     this._settings.buttonIconPauseInnerHTML = 'pause';
     this._settings.buttonIconPauseClasses = this._settings.buttonIconClass + ' material-icons mmp-pause-icon';
+    
     this._settings.equalizerImageClass = 'mmp-equalizer';
     this._settings.equalizerImageSelector = '.' + this._settings.equalizerImageClass;
+    
     this._settings.equalizerPauseImageSource = 'img/eq_pause.png';
     this._settings.equalizerPlayImageSource = 'img/eq_play.gif';
   }
 
-  _setRootContainer() {
-    this._rootContainer = document.getElementById(this._settings.containerID);
+  _setRoot() {
+    this._root = document.getElementById(this._settings.containerID);
   }
 
-  _setUserInterfaceHTML() {
-    let userInterfaceContainerWithInnerHTML = this._createUserInterfaceContainerWithInnerHTML();
-    this._rootContainer.appendChild(userInterfaceContainerWithInnerHTML);
+  _setHTML() {
+    let HTML = this._createHTML();
+    this._root.appendChild(HTML);
   }
 
-  _createUserInterfaceContainerWithInnerHTML() {
-    let userInterfaceContainer = this._createUserInterfaceContainer();
-    let userInterfaceInnerHTML = this._getUserInterfaceInnerHTML();
-    userInterfaceContainer.innerHTML = userInterfaceInnerHTML;
+  _createHTML() {
+    let container = this._createContainer();
+    let innerHTML = this._getInnerHTML();
+    container.innerHTML = innerHTML;
 
-    return userInterfaceContainer;
+    return container;
   }
 
-  _createUserInterfaceContainer() {
-    let userInterfaceContainer = document.createElement('div');
-    userInterfaceContainer.setAttribute('class', 'mmp-ui-container');
+  _createContainer() {
+    let container = document.createElement('div');
+    container.setAttribute('class', 'mmp-ui-container');
 
-    return userInterfaceContainer;
+    return container;
   }
 
-  _getUserInterfaceInnerHTML() {
-    let html = '';
-    html += '  <div class="mmp-button-container">';
-    html += '    <button type="button">';
-    html += '      <i class="' + this._settings.buttonIconClass + '"></i>';
-    html += '    </button>';
-    html += '  </div>';
-    html += '  <div class="mmp-display-container">';
-    html += '    <div class="mmp-song-info-container">';
-    html += '      <div class="mmp-song-name">' + this._settings.song + '</div>';
-    html += '      <div class="mmp-artist-name">' + this._settings.artist + '</div>';
-    html += '    </div>';
-    html += '    <div class="mmp-eq-container">';
-    html += '      <img class="' + this._settings.equalizerImageClass + '" src="" alt="Eq Icon">';
-    html += '    </div>';
-    html += '  </div>';
+  _getInnerHTML() {
+    let innerHTML = `
+      <div class="mmp-button-container">
+        <button type="button">
+          <i class="${this._settings.buttonIconClass}"></i>
+        </button>
+      </div>
 
-    return html;
+      <div class="mmp-display-container">
+        <div class="mmp-song-info-container">
+          <div class="mmp-song-name">${this._settings.song}</div>
+          <div class="mmp-artist-name">${this._settings.artist}</div>
+        </div>
+      
+        <div class="mmp-eq-container">
+          <img class="${this._settings.equalizerImageClass}" src="" alt="Eq Icon">
+        </div>
+      </div>
+    `;
+
+    return innerHTML;
   }
 
   setPauseState() {
@@ -70,13 +77,13 @@ class UserInterface {
   }
 
   _setButtonPauseState() {
-    let buttonIcon = this._rootContainer.querySelector(this._settings.buttonIconSelector);
+    let buttonIcon = this._root.querySelector(this._settings.buttonIconSelector);
     buttonIcon.innerHTML = this._settings.buttonIconPlayInnerHTML;
     buttonIcon.setAttribute('class', this._settings.buttonIconPlayClasses);
   }
 
   _setEqualizerPauseState() {
-    let equalizer = this._rootContainer.querySelector(this._settings.equalizerImageSelector);
+    let equalizer = this._root.querySelector(this._settings.equalizerImageSelector);
     equalizer.setAttribute('src', this._settings.equalizerPauseImageSource);
   }
 
@@ -86,18 +93,18 @@ class UserInterface {
   }
 
   _setButtonPlayState() {
-    let buttonIcon = this._rootContainer.querySelector(this._settings.buttonIconSelector);
+    let buttonIcon = this._root.querySelector(this._settings.buttonIconSelector);
     buttonIcon.innerHTML = this._settings.buttonIconPauseInnerHTML;
     buttonIcon.setAttribute('class', this._settings.buttonIconPauseClasses);
   }
 
   _setEqualizerPlayState() {
-    let equalizer = this._rootContainer.querySelector(this._settings.equalizerImageSelector);
+    let equalizer = this._root.querySelector(this._settings.equalizerImageSelector);
     equalizer.setAttribute('src', this._settings.equalizerPlayImageSource);
   }
 
   setButtonClickCallback(callback) {
-    let button = this._rootContainer.querySelector('button');
+    let button = this._root.querySelector('button');
     button.addEventListener('click', callback);
   }
 }
