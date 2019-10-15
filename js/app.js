@@ -1,27 +1,16 @@
 class UserInterface {
   constructor(settings) {
     this._settings = settings;
-    this._extendSettings();
+    this._preExtendSettings();
     this._setRoot();
     this._setHTML();
+    this._postExtendSettings();
     this.setPauseState();
   }
 
-  _extendSettings() {
+  _preExtendSettings() {
     this._settings.buttonIconClass = 'mmp-icon';
-    this._settings.buttonIconSelector = '.' + this._settings.buttonIconClass;
-
-    this._settings.buttonIconPlayInnerHTML = 'play_arrow';
-    this._settings.buttonIconPlayClasses = this._settings.buttonIconClass + ' material-icons mmp-play-icon';
-    
-    this._settings.buttonIconPauseInnerHTML = 'pause';
-    this._settings.buttonIconPauseClasses = this._settings.buttonIconClass + ' material-icons mmp-pause-icon';
-    
     this._settings.equalizerImageClass = 'mmp-equalizer';
-    this._settings.equalizerImageSelector = '.' + this._settings.equalizerImageClass;
-    
-    this._settings.equalizerPauseImageSource = 'img/eq_pause.png';
-    this._settings.equalizerPlayImageSource = 'img/eq_play.gif';
   }
 
   _setRoot() {
@@ -29,8 +18,8 @@ class UserInterface {
   }
 
   _setHTML() {
-    let HTML = this._createHTML();
-    this._root.appendChild(HTML);
+    let html = this._createHTML();
+    this._root.appendChild(html);
   }
 
   _createHTML() {
@@ -52,7 +41,7 @@ class UserInterface {
     let innerHTML = `
       <div class="mmp-button-container">
         <button type="button">
-          <i class="${this._settings.buttonIconClass}"></i>
+          <i class="${this._settings.buttonIconClass} material-icons"></i>
         </button>
       </div>
 
@@ -71,20 +60,28 @@ class UserInterface {
     return innerHTML;
   }
 
+  _postExtendSettings(){
+    this._buttonIcon = this._root.querySelector(`.${this._settings.buttonIconClass}`);
+    this._equalizer = this._root.querySelector(`.${this._settings.equalizerImageClass}`);
+    this._settings.buttonIconPauseClass = 'mmp-pause-icon';
+    this._settings.buttonIconPlayClass = 'mmp-play-icon';
+  }
+
   setPauseState() {
     this._setButtonPauseState();
     this._setEqualizerPauseState();
   }
 
   _setButtonPauseState() {
-    let buttonIcon = this._root.querySelector(this._settings.buttonIconSelector);
-    buttonIcon.innerHTML = this._settings.buttonIconPlayInnerHTML;
-    buttonIcon.setAttribute('class', this._settings.buttonIconPlayClasses);
+    let buttonIcon = this._buttonIcon;
+    buttonIcon.innerHTML = 'play_arrow';
+    buttonIcon.classList.remove(this._settings.buttonIconPauseClass);
+    buttonIcon.classList.add(this._settings.buttonIconPlayClass);
   }
 
   _setEqualizerPauseState() {
-    let equalizer = this._root.querySelector(this._settings.equalizerImageSelector);
-    equalizer.setAttribute('src', this._settings.equalizerPauseImageSource);
+    let equalizer = this._equalizer;
+    equalizer.setAttribute('src', 'img/eq_pause.png');
   }
 
   setPlayState() {
@@ -93,14 +90,15 @@ class UserInterface {
   }
 
   _setButtonPlayState() {
-    let buttonIcon = this._root.querySelector(this._settings.buttonIconSelector);
-    buttonIcon.innerHTML = this._settings.buttonIconPauseInnerHTML;
-    buttonIcon.setAttribute('class', this._settings.buttonIconPauseClasses);
+    let buttonIcon = this._buttonIcon;
+    buttonIcon.innerHTML = 'pause';
+    buttonIcon.classList.remove(this._settings.buttonIconPlayClass);
+    buttonIcon.classList.add(this._settings.buttonIconPauseClass);
   }
 
   _setEqualizerPlayState() {
-    let equalizer = this._root.querySelector(this._settings.equalizerImageSelector);
-    equalizer.setAttribute('src', this._settings.equalizerPlayImageSource);
+    let equalizer = this._equalizer;
+    equalizer.setAttribute('src', 'img/eq_play.gif');
   }
 
   setButtonClickCallback(callback) {
@@ -112,59 +110,61 @@ class UserInterface {
 class Engine {
   constructor(settings) {
     this._settings = settings;
-    this._extendSettings();
-    this._setRootContainer();
-    this._setEngineHTML();
+    this._preExtendSettings();
+    this._setRoot();
+    this._setHTML();
+    this._postExtendSettings();
   }
 
-  _extendSettings() {
+  _preExtendSettings() {
     this._settings.audioTag = 'audio';
   }
 
-  _setRootContainer() {
-    this._rootContainer = document.getElementById(this._settings.containerID);
+  _setRoot() {
+    this._root = document.getElementById(this._settings.containerID);
   }
 
-  _setEngineHTML() {
-    let audioElementWithInnerHTML = this._createAudioElementWithInnerHTML();
-    this._rootContainer.appendChild(audioElementWithInnerHTML);
+  _setHTML() {
+    let html = this._createHTML();
+    this._root.appendChild(html);
   }
 
-  _createAudioElementWithInnerHTML() {
-    let audioElement = this._createAudioElement();
-    let audioElementInnerHTML = this._getAudioElementInnerHTML();
-    audioElement.innerHTML = audioElementInnerHTML;
-    return audioElement;
+  _createHTML() {
+    let container = this._createContainer();
+    let innerHTML = this._getInnerHTML();
+    container.innerHTML = innerHTML;
+
+    return container;
   }
 
-  _createAudioElement() {
-    let audioElement = document.createElement(this._settings.audioTag);
-    return audioElement;
+  _createContainer() {
+    let container = document.createElement(this._settings.audioTag);
+    return container;
   }
 
-  _getAudioElementInnerHTML() {
-    let audioElementInnerHTML = '<source src="' + this._settings.audioFilePath + '" type="audio/mpeg">';
-    return audioElementInnerHTML;
+  _getInnerHTML() {
+    let innerHTML = `<source src="${this._settings.audioFilePath}" type="audio/mpeg">`;
+    return innerHTML;
+  }
+
+  _postExtendSettings(){
+    this._engine = this._root.querySelector(this._settings.audioTag);
   }
 
   play() {
-    let engine = this._rootContainer.querySelector(this._settings.audioTag);
-    engine.play();
+    this._engine.play();
   }
 
   pause() {
-    let engine = this._rootContainer.querySelector(this._settings.audioTag);
-    engine.pause();
+    this._engine.pause();
   }
 
   isPaused() {
-    let engine = this._rootContainer.querySelector(this._settings.audioTag);
-    return engine.paused;
+    return this._engine.paused;
   }
 
   setOnEndedCallback(callback) {
-    let engine = this._rootContainer.querySelector(this._settings.audioTag);
-    engine.addEventListener('ended', callback);
+    this._engine.addEventListener('ended', callback);
   }
 }
 
