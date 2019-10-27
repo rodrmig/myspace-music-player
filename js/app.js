@@ -197,30 +197,30 @@ class MyspaceMusicPlayer {
   }
 
   _setButtonClickCallback() {
-    let buttonClickCallback = this._buttonClickCallback(this._userInterface, this._engine);
+    let buttonClickCallback = this._buttonClickCallback();
     this._userInterface.setButtonClickCallback(buttonClickCallback);
   }
 
-  _buttonClickCallback(userInterface, engine) {
-    return function() {
-      if (engine.isPaused()) {
-        engine.play();
-        userInterface.setPlayState();
+  _buttonClickCallback() {
+    return () => {
+      if (this._engine.isPaused()) {
+        this._engine.play();
+        this._userInterface.setPlayState();
       } else {
-        engine.pause();
-        userInterface.setPauseState();
+        this._engine.pause();
+        this._userInterface.setPauseState();
       }
     }
   }
 
   _setOnEndedCallback() {
-    let onEndedCallback = this._onEndedCallback(this._userInterface);
+    let onEndedCallback = this._onEndedCallback();
     this._engine.setOnEndedCallback(onEndedCallback);
   }
 
-  _onEndedCallback(userInterface) {
-    return function() {
-      userInterface.setPauseState();
+  _onEndedCallback() {
+    return () => {
+      this._userInterface.setPauseState();
     }
   }
 
