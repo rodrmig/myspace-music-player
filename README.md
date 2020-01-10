@@ -13,7 +13,7 @@ git clone https://github.com/rodrmig/myspace-music-player
 ```
 
 ## Usage
-Open `demo.html` for a live demo. See the following code snippet from `js/app.js` for setup.
+Open `index.html` for a live demo. See the following code snippet from `js/app.js` for setup.
 
 ```javascript
 let settings = {
