@@ -16,7 +16,7 @@
   margin: 8px 3px 8px 8px;
 }
 
-.mmp-button-container > button {
+.mmp-button-container>button {
   background-image: linear-gradient(#ffffff, #cdcdcd, #969696);
   border-radius: 5px;
   border-style: solid;
@@ -57,7 +57,7 @@
   justify-content: flex-end;
 }
 
-.mmp-eq-container > img {
+.mmp-eq-container>img {
   max-height: 28px;
   max-width: 87px;
   height: auto;
@@ -69,4 +69,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+}
+
+.mmp-song-name {
+  font-weight: bold;
 }
